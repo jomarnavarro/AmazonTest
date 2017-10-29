@@ -12,5 +12,3 @@ Also, in order to run it one must modify the 'CHROME_DRIVER_PATH' and 'FIREFOX_D
 helpers.Properties class, as well as download chromedriver and geckodriver for the host operating system.
 
 One must also modify the test params in the /data/params.csv file in order to prepare the test to run more variations.
-
-Last, but not least, only a few methods were implemented due to limited time.  You will notice, however, that most of the libraries were done according to the developer's design, which we can go into detail in an interview :)
