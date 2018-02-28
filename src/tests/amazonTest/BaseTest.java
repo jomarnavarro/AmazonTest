@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import helpers.Properties;
 import pages.amazonTest.FilterPage;
@@ -41,7 +42,9 @@ public class BaseTest {
 			break;
 		case Properties.FIREFOX_BROWSER:	
 			System.setProperty(Properties.FIREFOX_DRIVER_PROPERTY, Properties.FIREFOX_DRIVER_PATH);
-			driver = new FirefoxDriver();
+			DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+			capabilities.setCapability("marionette", true);
+			driver = new FirefoxDriver(capabilities);
 			break;
 		case Properties.IE_BROWSER:	
 			System.setProperty(Properties.IE_DRIVER_PROPERTY, Properties.IE_DRIVER_PATH);
@@ -52,7 +55,7 @@ public class BaseTest {
 			driver = new FirefoxDriver();
 			break;
 		}
-		//driver.manage().timeouts().implicitlyWait(Properties.MEDIUM_WAIT, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Properties.MEDIUM_WAIT, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		driver.get(url);
 		homePage = new HomePage(driver);
