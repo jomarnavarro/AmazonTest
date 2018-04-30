@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.gargoylesoftware.htmlunit.javascript.background.JavaScriptExecutor;
 
@@ -19,6 +20,7 @@ public class HomePage {
 	
 	public WebDriver driver;
 	public JavascriptExecutor jse;
+	public WebDriverWait wait;
 	
 	/**
 	 * Constructs a new HomePage object, using the driver created in <class>tests.BaseTest</class>
@@ -28,6 +30,7 @@ public class HomePage {
 	 */	
 	public HomePage(WebDriver driver) {
 		this.driver = driver;
+		wait = new WebDriverWait(this.driver, 10);
 		jse = (JavascriptExecutor) driver;
 		PageFactory.initElements(driver, this);
 		

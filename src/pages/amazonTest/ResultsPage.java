@@ -91,22 +91,48 @@ public class ResultsPage {
 	private ArrayList<Article> getTopResults(int numResults) {
 		ArrayList<Article> search_results = new ArrayList<Article>();
 		ArrayList<WebElement> results = (ArrayList<WebElement>) driver.findElements(By.xpath(Locators.RESULTS_XPATH));
-		int counter = 1;
-		for(WebElement elem: results) {
-			WebElement nameElem = elem.findElement(By.xpath(Locators.ARTICLE_NAME_RELATIVE_XPATH));
-			String articleName = nameElem.getAttribute("textContent");
-			WebElement priceElem = elem.findElement(By.xpath(Locators.ARTICLE_PRICE_RELATIVE_XPATH));
-			double articlePrice = Double.parseDouble(priceElem.getAttribute("textContent").substring(1));
+		
+		for(int i = 0; i < numResults; i++) {
+			WebElement elem = results.get(i);
+			String articleName = getArticleName(elem);
+			double articlePrice = getArticlePrice(elem);
 			//TODO: take into account product may not be rated yet.
-			WebElement ratingElem = elem.findElement(By.xpath(Locators.ARTICLE_RATING_RELATIVE_XPATH));
-			StringTokenizer st = new StringTokenizer(ratingElem.getAttribute("textContent"), " ");
-			double articleRating = Double.parseDouble(st.nextToken());
-			search_results.add(new Article(articleName, articlePrice, articleRating));
-			counter++;
-			if(counter > numResults)
-				break;
+			double articleRating = getArticleRating(elem);
+			Article currentArticle = new Article(articleName, articlePrice, articleRating);
+			search_results.add(currentArticle);
 		}
 		return search_results;
+	}
+
+	/**
+	 * Gets article name based on a webElement
+	 * @param elem
+	 * @return
+	 */
+	private String getArticleName(WebElement elem) {
+		WebElement nameElem = elem.findElement(By.xpath(Locators.ARTICLE_NAME_RELATIVE_XPATH));
+		return nameElem.getAttribute("textContent");
+	}
+	
+	/**
+	 * Gets article price based on a WebElement
+	 * @param elem
+	 * @return
+	 */
+	private double getArticlePrice(WebElement elem) {
+		WebElement priceElem = elem.findElement(By.xpath(Locators.ARTICLE_PRICE_RELATIVE_XPATH));
+		return Double.parseDouble(priceElem.getAttribute("textContent").substring(1));
+	}
+	
+	/**
+	 * Gets article rating from a WebElement
+	 * @param elem
+	 * @return
+	 */
+	private double getArticleRating(WebElement elem) {
+		WebElement ratingElem = elem.findElement(By.xpath(Locators.ARTICLE_RATING_RELATIVE_XPATH));
+		StringTokenizer st = new StringTokenizer(ratingElem.getAttribute("textContent"), " ");
+		return Double.parseDouble(st.nextToken());
 	}
 
 	/**
