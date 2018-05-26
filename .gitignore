@@ -4,7 +4,6 @@
 *.class
 /bin
 .classpath
-.project
 
 # Log file
 *.log
